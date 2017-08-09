@@ -24,7 +24,10 @@ import lejos.nxt.comm.*;
  */
 public class RobotController {
 	BluetoothCommunication bluetoothConnection = new BluetoothCommunication();
-	// RobotAction
+	// Create the robot
+	// TODO: add a method to choose between the different robots
+	Nxt2RaceCar raceCarRobot;
+	
 	
 	DataInputStream dis;
 	DataOutputStream dos;
@@ -106,11 +109,11 @@ public class RobotController {
 			if (command != 0) {
 				switch (command) {
 				case 1:
-					Movements.moveForward(commandParameter);
+					raceCarRobot.moveForward(commandParameter);
 					break;
 					
 				case 2:
-					Movements.stop();
+					raceCarRobot.stop();
 					return;
 
 				case 3:
@@ -118,7 +121,7 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					Movements.turnLeft(commandParameter);
+					raceCarRobot.turnLeft(commandParameter);
 					break;
 				
 				case 4:
@@ -126,15 +129,15 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					Movements.turnRight(commandParameter);
+					raceCarRobot.turnRight(commandParameter);
 					break;
 				
 				case 5:
-					Movements.moveBackward(commandParameter);
+					raceCarRobot.moveBackward(commandParameter);
 					break;
 				
 				case 6:
-					Movements.stop();
+					raceCarRobot.stop();
 					break;
 					
 				case 7:
@@ -142,7 +145,7 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					Movements.openMouth(commandParameter);
+					//raceCarRobot.openMouth(commandParameter);
 					break;
 					
 				case 8:
@@ -150,11 +153,11 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					Movements.closeMouth(commandParameter);
+					//raceCarRobot.closeMouth(commandParameter);
 					break;
 					
 				case 9:
-					ackValue = Movements.getUltraSonic();
+					ackValue = raceCarRobot.getUltraSonic();
 					break;
 					
 				default:
