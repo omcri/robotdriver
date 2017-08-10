@@ -83,8 +83,8 @@ public class RobotController {
 	/**
 	 * Commands protocol:
 	 * 0 : error
-	 * 2 : stop 
 	 * 1 : move forward
+	 * 2 : stop 
 	 * 3 : turn left
 	 * 4 : turn right 
 	 * 5 : move backward
@@ -107,6 +107,8 @@ public class RobotController {
 			} catch (Exception e) {
 				return;
 			}
+			
+			System.out.println("command=" + command + "commandParameter" + commandParameter);
 			
 			Integer ackValue = 1; // TODO: see the acknowledgement method
 			if (command != 0) {
