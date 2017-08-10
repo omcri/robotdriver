@@ -11,7 +11,7 @@ import lejos.nxt.UltrasonicSensor;
  * @author gdherbom
  *
  */
-public abstract class NxtRobot {
+public abstract class NxtRobot implements NxtRobotInterface {
 	
 	public abstract void moveForward(final int duration);
 	
@@ -27,7 +27,7 @@ public abstract class NxtRobot {
 		Motor.C.stop();
 	}
 	
-	public static int getUltraSonic(){
+	public int getUltraSonic(){
 		UltrasonicSensor sonic = new UltrasonicSensor(SensorPort.S4);
 		return sonic.getDistance();
 	}

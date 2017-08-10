@@ -11,7 +11,7 @@ package org.omcri.robotdriver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.List;
+//import java.util.List;
 
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
@@ -34,8 +34,11 @@ public class RobotController {
 	NXTConnection connection;
 	Thread connectionThread;
 	boolean endingProgramm = false;
+	NxtRobotInterface robot;
 	
-	public RobotController() throws Exception {
+	
+	public RobotController(NxtRobotInterface robotIf) throws Exception {
+		robot = robotIf;
 		connectionThread = new Thread(){
 			@Override
 			public void run() {
@@ -109,11 +112,11 @@ public class RobotController {
 			if (command != 0) {
 				switch (command) {
 				case 1:
-					raceCarRobot.moveForward(commandParameter);
+					robot.moveForward(commandParameter);
 					break;
 					
 				case 2:
-					raceCarRobot.stop();
+					robot.stop();
 					return;
 
 				case 3:
@@ -121,7 +124,7 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					raceCarRobot.turnLeft(commandParameter);
+					robot.turnLeft(commandParameter);
 					break;
 				
 				case 4:
@@ -129,15 +132,15 @@ public class RobotController {
 					if (commandParameter == 1000) {
 						commandParameter = 45;
 					}
-					raceCarRobot.turnRight(commandParameter);
+					robot.turnRight(commandParameter);
 					break;
 				
 				case 5:
-					raceCarRobot.moveBackward(commandParameter);
+					robot.moveBackward(commandParameter);
 					break;
 				
 				case 6:
-					raceCarRobot.stop();
+					robot.stop();
 					break;
 					
 				case 7:
@@ -157,7 +160,7 @@ public class RobotController {
 					break;
 					
 				case 9:
-					ackValue = raceCarRobot.getUltraSonic();
+					ackValue = robot.getUltraSonic();
 					break;
 					
 				default:

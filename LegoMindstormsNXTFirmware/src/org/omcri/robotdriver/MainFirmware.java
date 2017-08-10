@@ -3,7 +3,7 @@
  */
 package org.omcri.robotdriver;
 
-import java.io.IOException;
+//import java.io.IOException;
 
 /**
  * @author gdherbom
@@ -15,8 +15,14 @@ public class MainFirmware {
 	 * @param args
 	 */
 	public static void main(String[] args)  throws Exception {
-		RobotController robot = new RobotController();
-
+		NxtRobotInterface robot = new Nxt2RaceCar();
+		
+		RobotController robotController = new RobotController(robot);
+		
+		if (args[1] != null)
+		{
+			System.out.println("argument : " + args[1]);
+		}
 	}
 
 }
