@@ -31,14 +31,20 @@ public class TrackerClientTest {
         } catch (InterruptedException ex) {
         }
         // Lauch a move.
-        move_forward(2500);
+        // move_forward(2500);
 
+        turnLeft(1500);
         try {
-            Thread.sleep(2500);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
         }
-        // turnLeft(1500);
-
+        stop();
+        turnRight(1500);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+        }
+        stop();
         disconnectFromRobot();
     }
 

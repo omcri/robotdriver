@@ -5,13 +5,16 @@ package org.omcri.robotdriver;
  */
 public interface IRobot {
 
-    public void moveForward(final int duration);
+    public void moveForward(int duration, int speed);
 
-    public void moveBackward(final int duration);
+    public void moveBackward(int duration, int speed);
 
-    public void turnLeft(final int angle);
+    public void turnLeft(final int duration, int speed);
 
-    public void turnRight(final int angle);
+    public void turnRight(final int duration, final int speed);
+
 
     public void stop();
+
+
 }

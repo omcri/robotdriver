@@ -7,19 +7,23 @@ import lejos.hardware.motor.Motor;
  */
 public class TrackerRobot extends AbstractEV3Robot {
 
-    protected static final int SPEED = 600; // TODO: check the possibility to change the SPEED via command
-
-    public static int moving = 0; // TODO: why this variable?
-
-
+    /**
+     * For forwarding the robot, we used Motor A and B connection.
+     *
+     * @param duration
+     * @param speed    number of complete rotations per seconds.
+     */
     @Override
-    public void moveForward(final int duration) {
+    public void moveForward(final int duration, final int speed) {
+        if (speed == 0) {
+            stop();
+        }
         Thread t = new Thread() {
             public void run() {
                 try {
-                    moving ++;
-                    Motor.A.setSpeed(SPEED);
-                    Motor.B.setSpeed(SPEED);
+                    moving++;
+                    Motor.A.setSpeed(speed);
+                    Motor.B.setSpeed(speed);
                     Motor.A.backward();
                     Motor.B.backward();
 
@@ -36,18 +40,26 @@ public class TrackerRobot extends AbstractEV3Robot {
             }
         };
         t.start();
-
     }
 
 
+    /**
+     * For backwarding the robot we used Motor A and B connection.
+     *
+     * @param duration
+     * @param speed
+     */
     @Override
-    public void moveBackward(final int duration) {
+    public void moveBackward(final int duration, final int speed) {
+        if (speed == 0) {
+            stop();
+        }
         Thread t = new Thread() {
             public void run() {
                 try {
-                    moving ++;
-                    Motor.A.setSpeed(SPEED);
-                    Motor.B.setSpeed(SPEED);
+                    moving++;
+                    Motor.A.setSpeed(speed);
+                    Motor.B.setSpeed(speed);
                     Motor.A.forward();
                     Motor.B.forward();
 
@@ -59,7 +71,58 @@ public class TrackerRobot extends AbstractEV3Robot {
                         Motor.B.stop();
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    // e.printStackTrace();
+                }
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * To turn left, this method use motor B.
+     *
+     * @param duration
+     * @param speed
+     */
+    @Override
+    public void turnLeft(final int duration, final int speed) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    moving++;
+                    Motor.B.setSpeed(speed);
+                    Motor.B.backward();
+                    Thread.sleep(duration);
+                    moving--;
+                    if (moving == 0) {
+                        Motor.B.stop();
+                    }
+                } catch (InterruptedException ex) {
+                }
+            }
+        };
+        t.start();
+    }
+
+    /**
+     * Turn tracker on right using only motor A command.
+     * @param duration
+     * @param speed
+     */
+    @Override
+    public void turnRight(final int duration, final int speed) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    moving++;
+                    Motor.A.setSpeed(speed);
+                    Motor.A.backward();
+                    Thread.sleep(duration);
+                    moving--;
+                    if (moving == 0) {
+                        Motor.B.stop();
+                    }
+                } catch (InterruptedException ex) {
                 }
             }
         };
@@ -67,23 +130,14 @@ public class TrackerRobot extends AbstractEV3Robot {
     }
 
     @Override
-    public void turnLeft(final int angle) {
-        Thread t = new Thread() {
-            public void run() {
-                Motor.A.rotate(angle);
-            }
-        };
-        t.start();
+    public void stop() {
+        super.stop();
+        moving = 0;
     }
 
     @Override
-    public void turnRight(final int angle) {
-        Thread t = new Thread() {
-            public void run() {
-                Motor.B.rotate(angle);
-            }
-        };
-        t.start();
+    public boolean isMoving() {
+        return super.isMoving();
     }
 
 }

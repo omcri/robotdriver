@@ -1,21 +1,21 @@
 package org.omcri.robotdriver;
 
 import lejos.hardware.motor.Motor;
-import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 /**
  * Created by christophe on 14/08/2017.
  */
 public abstract class AbstractEV3Robot implements IRobot {
 
-    public abstract void moveForward(final int duration);
+    public static int moving = 0;
 
-    public abstract void moveBackward(final int duration);
+    public abstract void moveForward(int duration, int speed);
 
-    public abstract void turnLeft(final int angle);
+    public abstract void moveBackward(int duration, int speed);
 
-    public abstract void turnRight(final int angle);
+    public abstract void turnLeft(final int duration, int speed);
+
+    public abstract void turnRight(final int duration, int speed);
 
     public void stop() {
         Motor.A.stop();
@@ -23,6 +23,15 @@ public abstract class AbstractEV3Robot implements IRobot {
         Motor.C.stop();
         Motor.D.stop();
     }
+
+    public boolean isMoving() {
+        if (moving == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
 //    public int getUltraSonic(){
 //        EV3UltrasonicSensor sonic = new EV3UltrasonicSensor(SensorPort.S4);

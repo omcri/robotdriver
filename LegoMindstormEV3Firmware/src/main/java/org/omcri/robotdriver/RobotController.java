@@ -86,7 +86,8 @@ public class RobotController {
     private void applyCommand() throws IOException {
         int command;
         int commandParameter = 1;
-
+        // TODO : manage speed.
+        int speed = 600;
         while (!endingProgram) {
             LCD.clear();
             LCD.drawString("Command waiting...", 0, 1);
@@ -104,7 +105,7 @@ public class RobotController {
             if (command != 0) {
                 switch (command) {
                     case 1:
-                        robot.moveForward(commandParameter);
+                        robot.moveForward(commandParameter, speed);
                         break;
 
                     case 2:
@@ -112,23 +113,15 @@ public class RobotController {
                         return;
 
                     case 3:
-                        // TODO: see to be linked with the confusion between angle and duration for the rotation of robogator
-                        if (commandParameter == 1000) {
-                            commandParameter = 45;
-                        }
-                        robot.turnLeft(commandParameter);
+                        robot.turnLeft(commandParameter, 600);
                         break;
 
                     case 4:
-                        // TODO: see to be linked with the confusion between angle and duration for the rotation of robogator
-                        if (commandParameter == 1000) {
-                            commandParameter = 45;
-                        }
-                        robot.turnRight(commandParameter);
+                        robot.turnRight(commandParameter, 600);
                         break;
 
                     case 5:
-                        robot.moveBackward(commandParameter);
+                        robot.moveBackward(commandParameter, speed);
                         break;
 
                     case 6:
@@ -136,19 +129,9 @@ public class RobotController {
                         break;
 
                     case 7:
-                        // TODO: why this?
-                        if (commandParameter == 1000) {
-                            commandParameter = 45;
-                        }
-                        //raceCarRobot.openMouth(commandParameter);
                         break;
 
                     case 8:
-                        // TODO: why this?
-                        if (commandParameter == 1000) {
-                            commandParameter = 45;
-                        }
-                        //raceCarRobot.closeMouth(commandParameter);
                         break;
 
                     case 9:
@@ -158,6 +141,7 @@ public class RobotController {
                     default:
                         return;
                 }
+                LCD.clear();
                 connection.writeToClient(ackValue);
             }
         }
